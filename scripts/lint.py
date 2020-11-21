@@ -96,23 +96,32 @@ def main() -> None:
         black_logger.info(s)
 
     LOGGER.info("Running autoflake...")
-    autoflake_main(
+    autoflake_retcode: int = autoflake_main(
         [AUTOFLAKE, *get_autoflake_args()], autoflake_info_logger, autoflake_warn_logger
     )
+    LOGGER.info(f"Autoflake exited with code {autoflake_retcode}")
 
     LOGGER.info("Running isort...")
     sys_stdout_orig: TextIO = sys.stdout
     sys.stdout = isort_logger
     isort_main(["."])
     sys.stdout = sys_stdout_orig
+    LOGGER.info("Isort ran successfully")
 
     LOGGER.info("Running black...")
     click_secho_orig = click.secho
     click.secho = click_secho_logger_shim
     black.out = black_logger.info
     black.err = black_logger.warn
-    black_main(["."])
+
+    try:
+        black_main((".",))
+    except SystemExit as e:
+        LOGGER.info(f"Black exited with code {e}")
+
     click.secho = click_secho_orig
+
+    LOGGER.info("Finished running all linters.")
 
 
 if __name__ == "__main__":
