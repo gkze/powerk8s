@@ -1,0 +1,4 @@
+{
+  "files.associations": {".envrc": "dotenv"},
+  "python.formatting.provider": "black"
+}
