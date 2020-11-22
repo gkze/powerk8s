@@ -63,15 +63,24 @@ def powerk8s(
 
     segments: Sequence[SegmentData] = []
 
+    if segment_args.get(SegmentArg.SHOW_KUBERNETES_LOGO, False):
+        segments.extend(
+            [
+                asdict(get_kubernetes_logo(HighlightGroup.KUBERNETES_CLUSTER)),
+            ]
+        )
+
     if segment_args.get(SegmentArg.SHOW_CLUSTER, False):
-        segments.append(
-            asdict(
-                SegmentData(
-                    contents=cfg.current_context["context"]["cluster"],
-                    highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER],
-                    divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE,
-                )
-            )
+        segments.extend(
+            [
+                asdict(
+                    SegmentData(
+                        contents=cfg.current_context["context"]["cluster"],
+                        highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER],
+                        divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE,
+                    )
+                ),
+            ]
         )
 
     if (
@@ -88,14 +97,6 @@ def powerk8s(
                         divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE,
                     )
                 ),
-            ]
-        )
-
-    if segment_args.get(SegmentArg.SHOW_KUBERNETES_LOGO, False):
-        segments.extend(
-            [
-                asdict(SegmentData(" ", [HighlightGroup.KUBERNETES_DIVIDER])),
-                asdict(get_kubernetes_logo(HighlightGroup.KUBERNETES_CLUSTER)),
             ]
         )
 
