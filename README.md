@@ -47,13 +47,13 @@ Just like with [so0k/powerline-kubernetes], you'll need a few things to get goin
     "function": "powerline_kubernetes.kubernetes",
     "priority": 30,
     "args": {
-        "show_kube_logo": true, // set to false to omit the Kube logo
-        "show_cluster": true, // show cluster name
-        "show_namespace": true, // show namespace name
-        "show_default_namespace": false, // do not show namespace name if it's "default"
+        "show_kube_logo": true,
+        "show_cluster": true,
+        "show_namespace": true,
+        "show_default_namespace": false,
         "alerts": [
-          "live", // show line in different color when namespace matches
-          "cluster:live"  // show line in different color when cluster name and namespace match
+          "live",
+          "cluster:live"
         ]
     }
   }
