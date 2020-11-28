@@ -33,7 +33,7 @@ class HighlightGroup:
 @dataclass
 class SegmentData:
     contents: Optional[str]
-    highlight_groups: List[str]
+    highlight_groups: Sequence[str]
     divider_highlight_group: Optional[str] = field(default="")
 
 

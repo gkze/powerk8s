@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 from unittest.mock import Mock, patch
 
 import kubernetes.config.kube_config  # type: ignore
@@ -14,6 +15,8 @@ from powerk8s import (
     get_segment_args,
     powerk8s,
 )
+
+FILE_DIR: Path = Path(__file__).resolve().parent
 
 
 class TestGetKubernetesLogo(unittest.TestCase):
@@ -59,23 +62,28 @@ class TestGetSegmentArgs(unittest.TestCase):
 
 class TestPowerK8s(unittest.TestCase):
     def setUp(self: TestPowerK8s) -> None:
-        self.kube_config_loader: Mock = Mock(
+        self.kube_config_yaml = open(f"{FILE_DIR}/fixtures/dummy_kubeconfig.yaml")
+
+        self.mock_path: Mock = Mock(
             return_value=Mock(
-                current_context={
-                    "context": {
-                        "cluster": "some-cluster",
-                        "namespace": "some-namespace",
-                    }
-                }
+                expanduser=Mock(
+                    return_value=Mock(
+                        open=Mock(
+                            return_value=Mock(
+                                __enter__=Mock(return_value=self.kube_config_yaml),
+                                __exit__=Mock(return_value=False),
+                            )
+                        )
+                    )
+                )
             )
         )
-        self.original_kube_config_loader: kubernetes.config.kube_config.KubeConfigLoader = (
-            kubernetes.config.kube_config.KubeConfigLoader
-        )
-        kubernetes.config.kube_config.KubeConfigLoader = self.kube_config_loader
+
+    def tearDown(self: TestPowerK8s) -> None:
+        self.kube_config_yaml.close()
 
     def test_simple(self: TestPowerK8s) -> None:
-        with patch("powerk8s.KubeConfigLoader", self.kube_config_loader), patch("powerk8s.Path"):
+        with patch("powerk8s.Path", self.mock_path):
             self.assertEqual(
                 powerk8s(show_cluster=True),
                 [
@@ -88,7 +96,7 @@ class TestPowerK8s(unittest.TestCase):
             )
 
     def test_complete(self: TestPowerK8s) -> None:
-        with patch("powerk8s.KubeConfigLoader", self.kube_config_loader), patch("powerk8s.Path"):
+        with patch("powerk8s.Path", self.mock_path):
             self.assertEqual(
                 powerk8s(
                     show_kube_logo=True,
