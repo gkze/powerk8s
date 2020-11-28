@@ -13,6 +13,7 @@ import toml
 from autoflake import _main as autoflake_main
 from black import main as black_main
 from isort.main import main as isort_main
+from mypy.main import main as mypy_main
 
 FILE_DIR: Path = Path(__file__).resolve().parent
 ROOT_DIR: Path = FILE_DIR.parent
@@ -78,7 +79,7 @@ def get_autoflake_args(
     return autoflake_args
 
 
-def main() -> None:
+def main() -> int:
     autoflake_info_logger: TextIOLogger = TextIOLogger(
         logging.getLogger(f"linter.{AUTOFLAKE}"), logging.INFO
     )
@@ -89,6 +90,10 @@ def main() -> None:
         logging.getLogger("linter.isort"), logging.INFO
     )
     black_logger: Logger = logging.getLogger("linter.black")
+    mypy_logger: TextIOLogger = TextIOLogger(
+        logging.getLogger("checker.mypy"),
+        logging.INFO,
+    )
 
     def click_secho_logger_shim(
         s: str, *args: Sequence[str], **kwargs: Mapping[str, Any]
@@ -96,10 +101,10 @@ def main() -> None:
         black_logger.info(s)
 
     LOGGER.info("Running autoflake...")
-    autoflake_retcode: int = autoflake_main(
+    autoflake_exitcode: int = autoflake_main(
         [AUTOFLAKE, *get_autoflake_args()], autoflake_info_logger, autoflake_warn_logger
     )
-    LOGGER.info(f"Autoflake exited with code {autoflake_retcode}")
+    LOGGER.info(f"Autoflake exited with code {autoflake_exitcode}")
 
     LOGGER.info("Running isort...")
     sys_stdout_orig: TextIO = sys.stdout
@@ -114,14 +119,38 @@ def main() -> None:
     black.out = black_logger.info
     black.err = black_logger.warn
 
+    black_exitcode: int = 0
     try:
         black_main((".",))
     except SystemExit as e:
-        LOGGER.info(f"Black exited with code {e}")
+        black_exitcode = e
+
+    LOGGER.info(f"Black exited with code {black_exitcode}")
 
     click.secho = click_secho_orig
 
+    LOGGER.info("Type checking source with Mypy...")
+    mypy_exitcode: int = 0
+    try:
+        mypy_main(None, mypy_logger, mypy_logger, [str(ROOT_DIR.resolve())])
+    except SystemExit as e:
+        mypy_exitcode = e
+
+    LOGGER.info(f"Mypy exited with code {mypy_exitcode}")
     LOGGER.info("Finished running all linters.")
+
+    exit_code: int = (
+        0
+        if all(
+            ec.code == 0 if isinstance(ec, SystemExit) else ec == 0
+            for ec in [autoflake_exitcode, black_exitcode, mypy_exitcode]
+        )
+        else 1
+    )
+
+    LOGGER.info(f"Exiting with {exit_code}")
+
+    sys.exit(exit_code)
 
 
 if __name__ == "__main__":

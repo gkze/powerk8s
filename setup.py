@@ -5,7 +5,7 @@
 # https://github.com/dephell/dephell
 
 try:
-    from setuptools import setup
+    from setuptools import setup  # type: ignore
 except ImportError:
     from distutils.core import setup
 

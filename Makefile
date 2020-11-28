@@ -6,17 +6,7 @@ help:
 # Set up for development
 .PHONY: setup
 setup:
-	@./scripts/setup.sh
-
-# Format Lua source
-.PHONY: fmt-lua
-fmt-lua:
-	@lua-format -i lua/*
-
-# Format Python source
-.PHONY: fmt-python
-fmt-python:
-	@poetry run sh -c "isort . && black ."
+	@./scripts/dev.sh
 
 # Format Shell source
 .PHONY: fmt-shell
@@ -25,12 +15,12 @@ fmt-shell:
 
 # Format all source
 .PHONY: fmt
-fmt: fmt-lua fmt-python fmt-shell
+fmt: fmt-shell
 
 # Lint & check Python source
 .PHONY: lint-python
-lint-python:
-	@poetry run sh -c "autoflake -ir --remove-all-unused-imports --remove-unused-variables . && mypy ."
+lint-python: fmt
+	@poetry run lint
 
 # Format & lint all source
 .PHONY: lint
