@@ -3,7 +3,7 @@
 This simple plugin is designed to show the Kubernetes cluster configured
 for the current context in `$KUBECONFIG`.
 
-This work is inspired by https://github.com/so0k/powerline-kubernetes,
+This work is inspired by [so0k/powerline-kubernetes](https://github.com/so0k/powerline-kubernetes),
 and intends to be a drop-in **replacement** as well as an improvement upon the original work.
 
 ## Installation
@@ -22,9 +22,11 @@ $ pip3 install git+ssh://git@github.com/gkze/powerk8s
 
 ## Configuration
 
-Just like with [so0k/powerline-kubernetes], you'll need a few things to get going:
+Just like with [so0k/powerline-kubernetes](https://github.com/so0k/powerline-kubernetes), you'll need a few things to get going:
 
 * **Colorschemes**
+
+  `.config/powerline/colorschemes/default.json`:
 
   ```json
   {
@@ -40,7 +42,8 @@ Just like with [so0k/powerline-kubernetes], you'll need a few things to get goin
 
 * **`powerk8s` invocation (& arguments)**
 
-  Here is a good starting point:
+  Here is a good starting point.
+  `.config/powerline/themes/shell/default.json`:
 
   ```json
   {
