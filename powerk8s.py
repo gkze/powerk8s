@@ -3,11 +3,14 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Any, Mapping, Optional, Sequence
+from typing import Any, List, Mapping, Optional, Sequence
 
 import yaml
-from kubernetes.config.kube_config import KUBE_CONFIG_DEFAULT_LOCATION, KubeConfigLoader
-from powerline import PowerlineLogger
+from kubernetes.config.kube_config import (  # type: ignore
+    KUBE_CONFIG_DEFAULT_LOCATION,
+    KubeConfigLoader,
+)
+from powerline import PowerlineLogger  # type: ignore
 
 KUBERNETES_LOGO: str = "\U00002388 "
 
@@ -30,7 +33,7 @@ class HighlightGroup:
 @dataclass
 class SegmentData:
     contents: Optional[str]
-    highlight_groups: Sequence[str]
+    highlight_groups: List[str]
     divider_highlight_group: Optional[str] = field(default="")
 
 
@@ -43,43 +46,35 @@ def get_segment_args(**kwargs: Mapping[str, Any]) -> Mapping[SegmentArg, Any]:
 
 
 def powerk8s(
-    *args: Sequence[Any], **kwargs: Mapping[str, Any]
-) -> Sequence[SegmentData]:
+    *args: List[Any], **kwargs: Mapping[str, Any]
+) -> Sequence[Mapping[str, str]]:
     segment_args: Mapping[SegmentArg, Any] = get_segment_args(**kwargs)
 
     pl: PowerlineLogger = None
     if "pl" in kwargs:
-        pl: PowerlineLogger = kwargs["pl"]
+        pl = kwargs["pl"]
 
     cfg: KubeConfigLoader = None
     with Path(KUBE_CONFIG_DEFAULT_LOCATION).expanduser().open() as f:
-        cfg: KubeConfigLoader = KubeConfigLoader(yaml.load(f, Loader=yaml.SafeLoader))
-
-    current_cluster: str = cfg.current_context["context"]["cluster"]
+        cfg = KubeConfigLoader(yaml.load(f, Loader=yaml.SafeLoader))
 
     if pl is not None:
         pl.debug(f"Context: {cfg.current_context}")
         pl.debug(f"Segment arguments: {segment_args}")
 
-    segments: Sequence[SegmentData] = []
+    segments: List[SegmentData] = []
 
     if segment_args.get(SegmentArg.SHOW_KUBERNETES_LOGO, False):
-        segments.extend(
-            [
-                asdict(get_kubernetes_logo(HighlightGroup.KUBERNETES_CLUSTER)),
-            ]
-        )
+        segments.extend([get_kubernetes_logo(HighlightGroup.KUBERNETES_CLUSTER)])
 
     if segment_args.get(SegmentArg.SHOW_CLUSTER, False):
         segments.extend(
             [
-                asdict(
-                    SegmentData(
-                        contents=cfg.current_context["context"]["cluster"],
-                        highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER],
-                        divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE,
-                    )
-                ),
+                SegmentData(
+                    contents=cfg.current_context["context"]["cluster"],
+                    highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER],
+                    divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE,
+                )
             ]
         )
 
@@ -89,15 +84,13 @@ def powerk8s(
     ):
         segments.extend(
             [
-                asdict(SegmentData(" ", [HighlightGroup.KUBERNETES_DIVIDER])),
-                asdict(
-                    SegmentData(
-                        contents=cfg.current_context["context"]["namespace"],
-                        highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER],
-                        divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE,
-                    )
+                SegmentData(" ", [HighlightGroup.KUBERNETES_DIVIDER]),
+                SegmentData(
+                    contents=cfg.current_context["context"]["namespace"],
+                    highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER],
+                    divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE,
                 ),
             ]
         )
 
-    return segments
+    return list(map(asdict, segments))
