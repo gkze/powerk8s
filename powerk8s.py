@@ -33,7 +33,7 @@ class HighlightGroup:
 @dataclass
 class SegmentData:
     contents: Optional[str]
-    highlight_groups: List[str]
+    highlight_groups: Sequence[str]
     divider_highlight_group: Optional[str] = field(default="")
 
 
@@ -41,13 +41,11 @@ def get_kubernetes_logo(color: str) -> SegmentData:
     return SegmentData(KUBERNETES_LOGO, [color], HighlightGroup.KUBERNETES_DIVIDER)
 
 
-def get_segment_args(**kwargs: Mapping[str, Any]) -> Mapping[SegmentArg, Any]:
+def get_segment_args(**kwargs: Any) -> Mapping[SegmentArg, Any]:
     return {sa: kwargs.get(sa.value, None) for sa in SegmentArg}
 
 
-def powerk8s(
-    *args: List[Any], **kwargs: Mapping[str, Any]
-) -> Sequence[Mapping[str, str]]:
+def powerk8s(*args: Sequence[Any], **kwargs: Any) -> Sequence[Mapping[str, str]]:
     segment_args: Mapping[SegmentArg, Any] = get_segment_args(**kwargs)
 
     pl: PowerlineLogger = None
@@ -65,32 +63,27 @@ def powerk8s(
     segments: List[SegmentData] = []
 
     if segment_args.get(SegmentArg.SHOW_KUBERNETES_LOGO, False):
-        segments.extend([get_kubernetes_logo(HighlightGroup.KUBERNETES_CLUSTER)])
+        segments.append(get_kubernetes_logo(HighlightGroup.KUBERNETES_CLUSTER))
 
     if segment_args.get(SegmentArg.SHOW_CLUSTER, False):
-        segments.extend(
-            [
-                SegmentData(
-                    contents=cfg.current_context["context"]["cluster"],
-                    highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER],
-                    divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE,
-                )
-            ]
+        segments.append(
+            SegmentData(
+                contents=cfg.current_context["context"]["cluster"],
+                highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER],
+                divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE,
+            )
         )
 
     if (
         segment_args.get(SegmentArg.SHOW_DEFAULT_NAMESPACE, False)
         and "namespace" in cfg.current_context["context"]
     ):
-        segments.extend(
-            [
-                SegmentData(" ", [HighlightGroup.KUBERNETES_DIVIDER]),
-                SegmentData(
-                    contents=cfg.current_context["context"]["namespace"],
-                    highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER],
-                    divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE,
-                ),
-            ]
+        segments.append(
+            SegmentData(
+                contents=cfg.current_context["context"]["namespace"],
+                highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER],
+                divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE,
+            )
         )
 
-    return list(map(asdict, segments))
+    return [asdict(s) for s in segments]

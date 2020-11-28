@@ -14,7 +14,7 @@ readme = ""
 setup(
     long_description=readme,
     name="powerk8s",
-    version="0.1.0",
+    version="0.1.1",
     description="Powerline Segment for Kubernetes",
     python_requires="==3.*,>=3.7.0",
     author="George Kontridze",
