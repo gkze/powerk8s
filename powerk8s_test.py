@@ -75,7 +75,7 @@ class TestPowerK8s(unittest.TestCase):
         kubernetes.config.kube_config.KubeConfigLoader = self.kube_config_loader
 
     def test_simple(self: TestPowerK8s) -> None:
-        with patch("powerk8s.KubeConfigLoader", self.kube_config_loader):
+        with patch("powerk8s.KubeConfigLoader", self.kube_config_loader), patch("powerk8s.Path"):
             self.assertEqual(
                 powerk8s(show_cluster=True),
                 [
@@ -88,7 +88,7 @@ class TestPowerK8s(unittest.TestCase):
             )
 
     def test_complete(self: TestPowerK8s) -> None:
-        with patch("powerk8s.KubeConfigLoader", self.kube_config_loader):
+        with patch("powerk8s.KubeConfigLoader", self.kube_config_loader), patch("powerk8s.Path"):
             self.assertEqual(
                 powerk8s(
                     show_kube_logo=True,
