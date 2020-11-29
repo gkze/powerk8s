@@ -26,7 +26,7 @@ Just like with [so0k/powerline-kubernetes](https://github.com/so0k/powerline-kub
 
 * **Colorschemes**
 
-  `.config/powerline/colorschemes/default.json`:
+  `~/.config/powerline/colorschemes/default.json`:
 
   ```json
   {
@@ -43,7 +43,7 @@ Just like with [so0k/powerline-kubernetes](https://github.com/so0k/powerline-kub
 * **`powerk8s` invocation (& arguments)**
 
   Here is a good starting point.
-  `.config/powerline/themes/shell/default.json`:
+  `~/.config/powerline/themes/shell/default.json`:
 
   ```json
   {
@@ -62,10 +62,14 @@ Just like with [so0k/powerline-kubernetes](https://github.com/so0k/powerline-kub
   }
   ```
 
-# Authors
+  This will add the segment to the shell.
+  Alternatively, placing this in `~/.config/powerline/colorschemes/default.json`
+  will make it show up in the Tmux status line.
+
+## Authors
 
 [@gkze](https://github.com/gkze)
 
-# License
+## License
 
 [MIT](LICENSE)
