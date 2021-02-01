@@ -29,18 +29,8 @@ lint: fmt lint-python
 # Run Python unit tests
 .PHONY: test-python
 test-python:
-	@poetry run python -m unittest
+	@poetry run python -m unittest --verbose
 
 # Run all unit tests
 .PHONY: test
 test: test-python
-
-# Run ConfGen - generates NGINX config files from sources
-.PHONY: confgen
-confgen:
-	@poetry run python -m confgen
-
-# Build the Docker entrypoint Golang binary
-.PHONY: entrypoint
-entrypoint:
-	@go build -o docker-entrypoint ./entrypoint
