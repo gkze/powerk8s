@@ -1,9 +1,14 @@
 [tool.poetry]
 name = "powerk8s"
-version = "0.1.4"
+version = "0.1.5"
 description = "Powerline Segment for Kubernetes"
 authors = ["George Kontridze <george.kontridze@gmail.com>"]
 license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/gkze/powerk8s"
+repository = "https://github.com/gkze/powerk8s"
+documentation = "https://gkze.github.io/powerk8s/powerk8s.html"
+keywords = ["kubernetes", "powerline", "tools"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -14,9 +19,7 @@ powerline-status = "^2.7"
 [tool.poetry.dev-dependencies]
 ipython = "^7.19.0"
 pymultilint = "^0.1.10"
-
-[tool.poetry.scripts]
-lint = "scripts.lint:main"
+pdoc = "^4.0.0"
 
 [build-system]
 requires = ["setuptools", "wheel"]
