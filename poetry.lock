@@ -474,7 +474,7 @@ toml = ">=0.7.1"
 
 [[package]]
 name = "pymultilint"
-version = "0.1.10"
+version = "0.1.13"
 description = "Utility tying multiple code quality tools together"
 category = "dev"
 optional = false
@@ -917,8 +917,8 @@ pylint = [
     {file = "pylint-2.6.0.tar.gz", hash = "sha256:bb4a908c9dadbc3aac18860550e870f58e1a02c9f2c204fdf5693d73be061210"},
 ]
 pymultilint = [
-    {file = "pymultilint-0.1.10-py3-none-any.whl", hash = "sha256:782032c3b952c6337ae75bec361e95edcf8309042078ae5f97d20729c6533f54"},
-    {file = "pymultilint-0.1.10.tar.gz", hash = "sha256:297df0b915a97511b798a1f6b8a98fc1805b3a945130d2ab13e4edb250f76f94"},
+    {file = "pymultilint-0.1.13-py3-none-any.whl", hash = "sha256:6c3f70029c23b8cc00d63cf27a99d02bd1ce72d0c9a4e0affe2b010d46790b19"},
+    {file = "pymultilint-0.1.13.tar.gz", hash = "sha256:9881299d60bff08414c27b6e4b7e83565835bc6efd3164c2f061ad8a26a7e8d6"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
