@@ -11,13 +11,7 @@ and intends to be a drop-in **replacement** as well as an improvement upon the o
 For the time being, `powerk8s` can be installed directly from GitHub:
 
 ```bash
-$ pip3 install https://github.com/gkze/powerk8s/archive/master.tar.gz 
-```
-
-Or, if you prefer SSH:
-
-```bash
-$ pip3 install git+ssh://git@github.com/gkze/powerk8s
+$ pip3 install powerk8s
 ```
 
 ## Configuration
