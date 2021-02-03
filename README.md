@@ -1,5 +1,9 @@
 # ☸️ powerk8s: Powerline Plugin for Kubernetes ☸️
 
+[![Actions Test Workflow Widget](https://github.com/gkze/powerk8s/workflows/ci/badge.svg)](https://github.com/gkze/powerk8s/actions?query=workflow%3Aci)
+[![PyPI Version](https://img.shields.io/pypi/v/powerk8s)](https://pypi.org/project/powerk8s/)
+[![Pdoc Documentation](https://img.shields.io/badge/pdoc-docs-green)](https://gkze.github.io/powerk8s/powerk8s.html)
+
 This simple plugin is designed to show the Kubernetes cluster configured
 for the current context in `$KUBECONFIG`.
 

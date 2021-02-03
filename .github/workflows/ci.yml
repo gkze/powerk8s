@@ -1,6 +1,6 @@
 ---
 name: CI
-on: pull_request
+on: [push, pull_request]
 
 jobs:
   ci:
@@ -23,6 +23,6 @@ jobs:
       - name: Set up dependencies
         run: poetry install
       - name: Run linters
-        run: poetry run lint
+        run: poetry run multilint
       - name: Run unit tests
         run: poetry run python -m unittest -v
