@@ -8,8 +8,6 @@ and intends to be a drop-in **replacement** as well as an improvement upon the o
 
 ## Installation
 
-For the time being, `powerk8s` can be installed directly from GitHub:
-
 ```bash
 $ pip3 install powerk8s
 ```
