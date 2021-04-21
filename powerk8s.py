@@ -11,7 +11,7 @@ from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Any, List, Mapping, Optional, Sequence
 
-from kubernetes import config
+from kubernetes import config  # type: ignore
 from powerline import PowerlineLogger  # type: ignore
 
 KUBERNETES_LOGO: str = "\U00002388 "
