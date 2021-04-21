@@ -10,6 +10,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Any, List, Mapping, Optional, Sequence
+
 from kubernetes import config
 from powerline import PowerlineLogger  # type: ignore
 
@@ -64,7 +65,7 @@ def powerk8s(*_: Sequence[Any], **kwargs: Any) -> Sequence[Mapping[str, str]]:
 
     powerline_logger: PowerlineLogger = kwargs.get("pl", None)
 
-    contexts, active_context = config.list_kube_config_contexts()
+    _, active_context = config.list_kube_config_contexts()
 
     if powerline_logger is not None:
         powerline_logger.debug(f"Context: {active_context}")

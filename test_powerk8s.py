@@ -10,7 +10,7 @@ from powerk8s import (
     SegmentArg,
     SegmentData,
     get_kubernetes_logo,
-    get_segment_args
+    get_segment_args,
 )
 
 FILE_DIR: Path = Path(__file__).resolve().parent
