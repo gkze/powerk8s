@@ -9,14 +9,9 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from enum import Enum
-from pathlib import Path
 from typing import Any, List, Mapping, Optional, Sequence
 
-import yaml
-from kubernetes.config.kube_config import (  # type: ignore
-    KUBE_CONFIG_DEFAULT_LOCATION,
-    KubeConfigLoader,
-)
+from kubernetes import config  # type: ignore
 from powerline import PowerlineLogger  # type: ignore
 
 KUBERNETES_LOGO: str = "\U00002388 "
@@ -70,12 +65,10 @@ def powerk8s(*_: Sequence[Any], **kwargs: Any) -> Sequence[Mapping[str, str]]:
 
     powerline_logger: PowerlineLogger = kwargs.get("pl", None)
 
-    cfg: KubeConfigLoader = None
-    with Path(KUBE_CONFIG_DEFAULT_LOCATION).expanduser().open() as file:
-        cfg = KubeConfigLoader(yaml.load(file, Loader=yaml.SafeLoader))
+    _, active_context = config.list_kube_config_contexts()
 
     if powerline_logger is not None:
-        powerline_logger.debug(f"Context: {cfg.current_context}")
+        powerline_logger.debug(f"Context: {active_context}")
         powerline_logger.debug(f"Segment arguments: {segment_args}")
 
     segments: List[SegmentData] = []
@@ -86,7 +79,7 @@ def powerk8s(*_: Sequence[Any], **kwargs: Any) -> Sequence[Mapping[str, str]]:
     if segment_args.get(SegmentArg.SHOW_CLUSTER, False):
         segments.append(
             SegmentData(
-                contents=cfg.current_context["context"]["cluster"],
+                contents=active_context["context"]["cluster"],
                 highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER.value],
                 divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE.value,
             )
@@ -94,11 +87,11 @@ def powerk8s(*_: Sequence[Any], **kwargs: Any) -> Sequence[Mapping[str, str]]:
 
     if (
         segment_args.get(SegmentArg.SHOW_DEFAULT_NAMESPACE, False)
-        and "namespace" in cfg.current_context["context"]
+        and "namespace" in active_context["context"]
     ):
         segments.append(
             SegmentData(
-                contents=cfg.current_context["context"]["namespace"],
+                contents=active_context["context"]["namespace"],
                 highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER.value],
                 divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE.value,
             )
