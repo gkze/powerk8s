@@ -89,12 +89,19 @@ def powerk8s(*_: Sequence[Any], **kwargs: Any) -> Sequence[Mapping[str, str]]:
         segment_args.get(SegmentArg.SHOW_DEFAULT_NAMESPACE, False)
         and "namespace" in active_context["context"]
     ):
-        segments.append(
-            SegmentData(
-                contents=active_context["context"]["namespace"],
-                highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER.value],
-                divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE.value,
-            )
+        segments.extend(
+            [
+                SegmentData(
+                    contents=" ",
+                    highlight_groups=[HighlightGroup.KUBERNETES_DIVIDER.value],
+                    divider_highlight_group=HighlightGroup.KUBERNETES_DIVIDER.value,
+                ),
+                SegmentData(
+                    contents=active_context["context"]["namespace"],
+                    highlight_groups=[HighlightGroup.KUBERNETES_CLUSTER.value],
+                    divider_highlight_group=HighlightGroup.KUBERNETES_NAMESPACE.value,
+                ),
+            ]
         )
 
     return [asdict(s) for s in segments]
