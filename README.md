@@ -43,7 +43,7 @@ Just like with [so0k/powerline-kubernetes](https://github.com/so0k/powerline-kub
 
   ```json
   {
-    "function": "powerline_kubernetes.kubernetes",
+    "function": "powerk8s.powerk8s",
     "priority": 30,
     "args": {
         "show_kube_logo": true,
