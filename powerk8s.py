@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from enum import Enum
-from typing import Any, List, Mapping, Optional, Sequence
+from typing import Any, Mapping, Sequence
 
 from kubernetes import config  # type: ignore
 from powerline import PowerlineLogger  # type: ignore
@@ -41,10 +41,10 @@ class SegmentData:
     """Encapsulates data for a Powerk8s segment."""
 
     # pylint: disable=unsubscriptable-object
-    contents: Optional[str]
+    contents: str | None
     highlight_groups: Sequence[str]
     # pylint: disable=unsubscriptable-object
-    divider_highlight_group: Optional[str] = field(default="")
+    divider_highlight_group: str | None = field(default="")
 
 
 def get_kubernetes_logo(color: str) -> SegmentData:
@@ -71,7 +71,7 @@ def powerk8s(*_: Sequence[Any], **kwargs: Any) -> Sequence[Mapping[str, str]]:
         powerline_logger.debug(f"Context: {active_context}")
         powerline_logger.debug(f"Segment arguments: {segment_args}")
 
-    segments: List[SegmentData] = []
+    segments: list[SegmentData] = []
 
     if segment_args.get(SegmentArg.SHOW_KUBERNETES_LOGO, False):
         segments.append(get_kubernetes_logo(HighlightGroup.KUBERNETES_CLUSTER.value))
