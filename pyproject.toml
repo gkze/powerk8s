@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "powerk8s"
-version = "0.6.0"
+version = "0.7.0"
 description = "Powerline Segment for Kubernetes"
 authors = ["George Kontridze <george.kontridze@gmail.com>"]
 license = "MIT"
