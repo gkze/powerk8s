@@ -269,7 +269,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "pdoc"
-version = "12.1.0"
+version = "12.2.2"
 description = "API Documentation for Python Projects"
 category = "dev"
 optional = false
@@ -282,7 +282,7 @@ MarkupSafe = "*"
 pygments = ">=2.12.0"
 
 [package.extras]
-dev = ["flake8", "hypothesis", "mypy", "pytest", "pytest-cov", "pytest-timeout", "tox"]
+dev = ["autoflake", "black", "flake8", "hypothesis", "mypy", "pytest", "pytest-cov", "pytest-timeout", "pyupgrade", "reorder-python-imports", "tox", "yesqa"]
 
 [[package]]
 name = "platformdirs"
@@ -591,7 +591,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "fe6628bf648467f1db44eb765c37f843cd0ca8b944953fe87a302321d84c6e79"
+content-hash = "52a7abadc21166485300e62f88dd2c2ffebfb0ae86512c4c1522a271d00e77a7"
 
 [metadata.files]
 astroid = [
@@ -798,8 +798,8 @@ pathspec = [
     {file = "pathspec-0.10.1.tar.gz", hash = "sha256:7ace6161b621d31e7902eb6b5ae148d12cfd23f4a249b9ffb6b9fee12084323d"},
 ]
 pdoc = [
-    {file = "pdoc-12.1.0-py3-none-any.whl", hash = "sha256:fe1d3cd7bbc19f45451d223c7f4649dcf4f2abdbcc92580d9602cc12d677e560"},
-    {file = "pdoc-12.1.0.tar.gz", hash = "sha256:b36ea7b3bfe1b9d2e14d0ce52b971d845ad5e114ba641e11999099ef9d822df2"},
+    {file = "pdoc-12.2.2-py3-none-any.whl", hash = "sha256:c89adf5b9353760e8916f4ae45af68f3771f3d02285e4503897ff00b1cc4e4a6"},
+    {file = "pdoc-12.2.2.tar.gz", hash = "sha256:9a501661ec5b51599e0084ad7eefe2f77009a0e77fd6f6e91555682f2edd7889"},
 ]
 platformdirs = [
     {file = "platformdirs-2.5.2-py3-none-any.whl", hash = "sha256:027d8e83a2d7de06bbac4e5ef7e023c02b863d7ea5d079477e722bb41ab25788"},
