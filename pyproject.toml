@@ -17,7 +17,7 @@ kubernetes = ">=24.2,<26.0"
 powerline-status = "^2.7"
 
 [tool.poetry.dev-dependencies]
-pdoc = "^12.3"
+pdoc = "^13.0"
 pymultilint = "^0.21"
 
 [build-system]

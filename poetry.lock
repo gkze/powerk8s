@@ -454,14 +454,14 @@ files = [
 
 [[package]]
 name = "pdoc"
-version = "12.3.1"
+version = "13.0.0"
 description = "API Documentation for Python Projects"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pdoc-12.3.1-py3-none-any.whl", hash = "sha256:c3f24f31286e634de9c76fa6e67bd5c0c5e74360b41dc91e6b82499831eb52d8"},
-    {file = "pdoc-12.3.1.tar.gz", hash = "sha256:453236f225feddb8a9071428f1982a78d74b9b3da4bc4433aedb64dbd0cc87ab"},
+    {file = "pdoc-13.0.0-py3-none-any.whl", hash = "sha256:f9088b1c10f3296f46a08796e05e307470af5f4253f71d536781f6c305baf912"},
+    {file = "pdoc-13.0.0.tar.gz", hash = "sha256:aadbf6c757c6e65c4754d6c26c4eb6c1bf8c7a9fb893f1fbe5a7b879dde59e46"},
 ]
 
 [package.dependencies]
@@ -471,7 +471,7 @@ MarkupSafe = "*"
 pygments = ">=2.12.0"
 
 [package.extras]
-dev = ["black", "hypothesis", "mypy", "pytest", "pytest-cov", "pytest-timeout", "ruff", "tox", "types-pygments"]
+dev = ["black", "hypothesis", "mypy", "pygments (>=2.14.0)", "pytest", "pytest-cov", "pytest-timeout", "ruff", "tox", "types-pygments"]
 
 [[package]]
 name = "platformdirs"
@@ -987,4 +987,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "287f479d64a256df5a323ec1b986b29b6565642e8cf1e41abae7f7f8f4d3ea2b"
+content-hash = "af844a259cbb567a54c8dce06325a486a7b01cfa70d0de8e5aaef0cf58e980d6"
