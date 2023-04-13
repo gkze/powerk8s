@@ -8,7 +8,7 @@ as:
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-from enum import StrEnum
+from enum import Enum
 from typing import Any, Mapping, Sequence
 
 from kubernetes import config  # type: ignore
@@ -17,7 +17,7 @@ from powerline import PowerlineLogger  # type: ignore
 KUBERNETES_LOGO: str = "\U00002388 "
 
 
-class SegmentArg(StrEnum):
+class SegmentArg(Enum):
     """All possible Powerline segment argument types for Powerk8s."""
 
     SHOW_KUBERNETES_LOGO = "show_kube_logo"
@@ -26,7 +26,7 @@ class SegmentArg(StrEnum):
     SHOW_DEFAULT_NAMESPACE = "show_default_namespace"
 
 
-class HighlightGroup(StrEnum):
+class HighlightGroup(Enum):
     """All possible highlight groups for Powerk8s."""
 
     KUBERNETES_CLUSTER_ALERT = "kubernetes_cluster:alert"
