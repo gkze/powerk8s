@@ -8,7 +8,7 @@ as:
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-from enum import Enum
+from enum import StrEnum
 from typing import Any, Mapping, Sequence
 
 from kubernetes import config  # type: ignore
@@ -17,23 +17,23 @@ from powerline import PowerlineLogger  # type: ignore
 KUBERNETES_LOGO: str = "\U00002388 "
 
 
-class SegmentArg(Enum):
+class SegmentArg(StrEnum):
     """All possible Powerline segment argument types for Powerk8s."""
 
-    SHOW_KUBERNETES_LOGO: str = "show_kube_logo"
-    SHOW_CLUSTER: str = "show_cluster"
-    SHOW_NAMESPACE: str = "show_namespace"
-    SHOW_DEFAULT_NAMESPACE: str = "show_default_namespace"
+    SHOW_KUBERNETES_LOGO = "show_kube_logo"
+    SHOW_CLUSTER = "show_cluster"
+    SHOW_NAMESPACE = "show_namespace"
+    SHOW_DEFAULT_NAMESPACE = "show_default_namespace"
 
 
-class HighlightGroup(Enum):
+class HighlightGroup(StrEnum):
     """All possible highlight groups for Powerk8s."""
 
-    KUBERNETES_CLUSTER_ALERT: str = "kubernetes_cluster:alert"
-    KUBERNETES_CLUSTER: str = "kubernetes_cluster"
-    KUBERNETES_DIVIDER: str = "kubernetes:divider"
-    KUBERNETES_NAMESPACE_ALERT: str = "kubernetes_namespace:alert"
-    KUBERNETES_NAMESPACE: str = "kubernetes_namespace"
+    KUBERNETES_CLUSTER_ALERT = "kubernetes_cluster:alert"
+    KUBERNETES_CLUSTER = "kubernetes_cluster"
+    KUBERNETES_DIVIDER = "kubernetes:divider"
+    KUBERNETES_NAMESPACE_ALERT = "kubernetes_namespace:alert"
+    KUBERNETES_NAMESPACE = "kubernetes_namespace"
 
 
 @dataclass
