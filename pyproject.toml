@@ -13,7 +13,7 @@ keywords = ["kubernetes", "powerline", "tools"]
 [tool.poetry.dependencies]
 python = "^3.8"
 PyYAML = "^6.0"
-kubernetes = "^26.1"
+kubernetes = ">=26.1,<29.0"
 powerline-status = "^2.7"
 
 [tool.poetry.dev-dependencies]
